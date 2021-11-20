@@ -1,0 +1,16 @@
+@import "@fontsource/montserrat/300.css";
+@import "@fontsource/montserrat/400.css";
+@import "@fontsource/montserrat/500.css";
+@import "@fontsource/montserrat/700.css";
+
+* {
+  margin: 0;
+}
+
+.main {
+  margin: 0;
+  padding: 0;
+  font-family: "Montserrat", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
