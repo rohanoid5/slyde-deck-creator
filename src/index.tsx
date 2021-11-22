@@ -1,10 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { Container, createTheme, CssBaseline } from '@mui/material';
+import { createTheme, CssBaseline } from '@mui/material';
 import { ThemeProvider } from '@mui/system';
 
 import { defaultThemeOptions } from './theme/default';
+
+import Home from './component/Home';
 
 import './index.css';
 
@@ -15,7 +17,7 @@ const App = () => {
     <div className="main">
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <Container>HEY!!</Container>
+        <Home />
       </ThemeProvider>
     </div>
   );
