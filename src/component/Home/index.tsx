@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
@@ -10,7 +11,21 @@ import Button from '@mui/material/Button';
 import SlideshowIcon from '@mui/icons-material/Slideshow';
 import AddIcon from '@mui/icons-material/Add';
 
+import Preview from '../Preview';
+
 const Home: React.FC = () => {
+  const [slides, setSlides] = useState<Array<string>>([]);
+
+  const addSlide = () => {
+    const slideId = uuidv4();
+
+    setSlides((prevSlides) => [...prevSlides, slideId]);
+  };
+
+  const deleteSlide = (slideId: string) => {
+    setSlides((prevSlides) => prevSlides.filter((currSlideId) => currSlideId !== slideId));
+  };
+
   return (
     <div>
       <Box sx={{ flexGrow: 1 }}>
@@ -53,22 +68,14 @@ const Home: React.FC = () => {
                     color="primary"
                     variant="outlined"
                     endIcon={<AddIcon />}
+                    onClick={addSlide}
                   >
                     Add Slide
                   </Button>
                 </Box>
-                <Paper sx={{ marginBottom: '.5rem', minHeight: '256px' }} elevation={6}>
-                  A
-                </Paper>
-                <Paper sx={{ marginBottom: '.5rem', minHeight: '256px' }} elevation={6}>
-                  A
-                </Paper>
-                <Paper sx={{ marginBottom: '.5rem', minHeight: '256px' }} elevation={6}>
-                  A
-                </Paper>
-                <Paper sx={{ marginBottom: '.5rem', minHeight: '256px' }} elevation={6}>
-                  A
-                </Paper>
+
+                <Preview slides={slides} deleteSlide={deleteSlide} />
+
                 <Paper
                   sx={{
                     marginBottom: '.5rem',
@@ -86,6 +93,7 @@ const Home: React.FC = () => {
                     color="primary"
                     variant="contained"
                     endIcon={<AddIcon />}
+                    onClick={addSlide}
                   >
                     Add Slide
                   </Button>
