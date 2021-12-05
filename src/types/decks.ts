@@ -47,3 +47,18 @@ export interface Position {
 export interface ProcessedDeckConfig extends DeckConfig {
   contents: Array<Content & Position>;
 }
+
+interface Color {
+  percentage: number;
+  color: string;
+}
+
+interface Gradient {
+  angle: number;
+  type: string;
+  colors: Array<Color>;
+}
+export interface BGColor {
+  mainColor: string;
+  gradient: Gradient;
+}

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
 
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
@@ -8,8 +7,11 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
+import Popover from '@mui/material/Popover';
+import IconButton from '@mui/material/IconButton';
 import SlideshowIcon from '@mui/icons-material/Slideshow';
 import AddIcon from '@mui/icons-material/Add';
+import ColorLensIcon from '@mui/icons-material/ColorLens';
 
 import { DeckConfig } from '../../types/decks';
 
@@ -18,10 +20,24 @@ import { DeckContext } from '../../contexts/decks.context';
 import { getDefaultDeck } from '../../utils/decks';
 
 import Preview from '../Preview';
+import Deck from '../Deck';
+import BgColor from '../BgColor';
 
 const Home: React.FC = () => {
   const [decks, setDecks] = useState<Array<DeckConfig>>([]);
   const [selectedDeck, setSelectedDeck] = useState<number>(0);
+
+  const [anchorElBgColor, setAnchorElBgColor] = React.useState<HTMLButtonElement | null>(null);
+
+  const handleBgColorClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorElBgColor(event.currentTarget);
+  };
+
+  const handleBgColorClose = () => {
+    setAnchorElBgColor(null);
+  };
+
+  const openBgColor = Boolean(anchorElBgColor);
 
   const addDecks = () => {
     setDecks((prevDecks) => [...prevDecks, getDefaultDeck()]);
@@ -37,14 +53,41 @@ const Home: React.FC = () => {
         <Box sx={{ flexGrow: 1 }}>
           <AppBar position="static" elevation={3}>
             <Toolbar>
-              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                Micro-Frontend Architecture
-              </Typography>
-              <Button color="primary" variant="contained" endIcon={<SlideshowIcon />}>
-                Present
-              </Button>
+              <Grid item xs={3}>
+                <Typography variant="h6" component="div">
+                  Micro-Frontend Architecture
+                </Typography>
+              </Grid>
+
+              <Grid item xs={9} sx={{ display: 'flex' }}>
+                <IconButton aria-label="background-color" onClick={handleBgColorClick}>
+                  <ColorLensIcon />
+                </IconButton>
+                <Popover
+                  id={openBgColor ? 'simple-popover' : undefined}
+                  open={openBgColor}
+                  anchorEl={anchorElBgColor}
+                  onClose={handleBgColorClose}
+                  anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'left',
+                  }}
+                >
+                  <BgColor />
+                </Popover>
+
+                <Button
+                  color="primary"
+                  variant="contained"
+                  sx={{ marginLeft: 'auto' }}
+                  endIcon={<SlideshowIcon />}
+                >
+                  Present
+                </Button>
+              </Grid>
             </Toolbar>
           </AppBar>
+
           <Grid container>
             <Grid item xs={3} sx={{ height: 'calc(100vh - 64px)' }}>
               <Paper
@@ -84,7 +127,12 @@ const Home: React.FC = () => {
                     </Button>
                   </Box>
 
-                  <Preview decks={decks} deleteDeck={deleteDeck} />
+                  <Preview
+                    decks={decks}
+                    selectedDeck={selectedDeck}
+                    setSelectedDeck={setSelectedDeck}
+                    deleteDeck={deleteDeck}
+                  />
 
                   <Paper
                     sx={{
@@ -116,7 +164,9 @@ const Home: React.FC = () => {
                 <Typography variant="h4" component="div" align="center" sx={{ margin: '12rem' }}>
                   So empty....
                 </Typography>
-              ) : null}
+              ) : (
+                <Deck />
+              )}
             </Grid>
           </Grid>
         </Box>
