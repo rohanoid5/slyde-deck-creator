@@ -58,6 +58,7 @@ interface Gradient {
   type: string;
   colors: Array<Color>;
 }
+
 export interface BGColor {
   mainColor: string;
   gradient: Gradient;

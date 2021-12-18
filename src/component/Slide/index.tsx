@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Paper } from '@mui/material';
 
-const Deck: React.FC = () => {
+const Slide: React.FC = () => {
   return (
     <Paper
       elevation={6}
@@ -20,4 +20,4 @@ const Deck: React.FC = () => {
   );
 };
 
-export default Deck;
+export default Slide;

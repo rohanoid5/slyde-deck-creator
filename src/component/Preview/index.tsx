@@ -8,16 +8,16 @@ import StarOutlineIcon from '@mui/icons-material/StarOutline';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
-import { DeckConfig } from '../../types/decks';
+import { DeckConfig } from '../../types/deck';
 
 import PreviewStyle from './Preview.module.scss';
 
 const Preview: React.FC<{
-  decks: Array<DeckConfig>;
-  selectedDeck: number;
-  setSelectedDeck: React.Dispatch<React.SetStateAction<number>>;
-  deleteDeck: (id: string) => void;
-}> = ({ decks, selectedDeck, setSelectedDeck, deleteDeck }) => {
+  slides: Array<DeckConfig>;
+  selectedSlide: number;
+  setSelectedSlide: React.Dispatch<React.SetStateAction<number>>;
+  deleteSlide: (id: string) => void;
+}> = ({ slides, selectedSlide, setSelectedSlide, deleteSlide }) => {
   const [anchorPopEl, setAnchorPopEl] = useState<(EventTarget & HTMLButtonElement) | null>(null);
 
   const theme = useTheme();
@@ -30,23 +30,23 @@ const Preview: React.FC<{
     setAnchorPopEl(null);
   };
 
-  const handleDeckClick = (idx: number) => setSelectedDeck(idx);
+  const handleSlideClick = (idx: number) => setSelectedSlide(idx);
 
   const isPopOpen = Boolean(anchorPopEl);
   const popId = isPopOpen ? 'simple-popover' : undefined;
 
   return (
     <>
-      {decks.map((deck, idx) => {
+      {slides.map((slide, idx) => {
         return (
-          <div key={deck.id} onClick={() => handleDeckClick(idx)}>
+          <div key={slide.id} onClick={() => handleSlideClick(idx)}>
             <Paper
               sx={{
                 marginBottom: '.5rem',
                 minHeight: '256px',
                 position: 'relative',
                 border:
-                  idx === selectedDeck
+                  idx === selectedSlide
                     ? `2px solid ${theme.palette.primary.main}`
                     : '2px solid transparent',
               }}
@@ -85,7 +85,7 @@ const Preview: React.FC<{
                     size="small"
                     startIcon={<DeleteIcon />}
                     onClick={() => {
-                      deleteDeck(deck.id);
+                      deleteSlide(slide.id);
                       handleMoreClose();
                     }}
                   >

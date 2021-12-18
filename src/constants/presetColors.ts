@@ -1,4 +1,4 @@
-import { BGColor } from '../types/decks';
+import { BGColor } from '../types/deck';
 
 export const DEFAULT_BG_COLORS: Array<BGColor> = [
   {

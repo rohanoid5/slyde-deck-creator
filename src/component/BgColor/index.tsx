@@ -1,7 +1,7 @@
 import React from 'react';
 import Box from '@mui/material/Box';
 import { DEFAULT_BG_COLORS as presetBgColors } from '../../constants/presetColors';
-import { getBgColorCSS } from '../../utils/decks';
+import { getBgColorCSS } from '../../utils/slides';
 
 const BgColor: React.FC = () => {
   return (

@@ -1,7 +1,7 @@
-import { BGColor, Content, DeckConfig } from '../types/decks';
+import { BGColor, Content, DeckConfig } from '../types/deck';
 import { v4 as uuidv4 } from 'uuid';
 
-export const getDefaultDeck = (): DeckConfig => ({
+export const getDefaultSlide = (): DeckConfig => ({
   id: uuidv4(),
   contents: [] as Array<Content>,
   createdAt: new Date().getTime(),
