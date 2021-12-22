@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useReducer, useState } from 'react';
 
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
@@ -12,10 +12,11 @@ import IconButton from '@mui/material/IconButton';
 import SlideshowIcon from '@mui/icons-material/Slideshow';
 import AddIcon from '@mui/icons-material/Add';
 import ColorLensIcon from '@mui/icons-material/ColorLens';
+import InputBase from '@mui/material/InputBase';
 
-import { DeckConfig } from '../../types/deck';
+import { SlideConfig } from '../../types/deck';
 
-import { DeckContext } from '../../contexts/slides.context';
+import { SlidesContext } from '../../contexts/slides.context';
 import { CurrentSlideContext } from '../../contexts/currentSlide.context';
 
 import { getDefaultSlide } from '../../utils/slides';
@@ -24,8 +25,11 @@ import Preview from '../Preview';
 import Slide from '../Slide';
 import BgColor from '../BgColor';
 
+import { updateDeckNameActionCreator } from '../../actions';
+import { deckReducer, getInitialDeckConfig } from '../../reducers/deck.reducer';
+
 const Home: React.FC = () => {
-  const [slides, setSlides] = useState<Array<DeckConfig>>([]);
+  const [slides, setSlides] = useState<Array<SlideConfig>>([]);
   const [selectedSlide, setSelectedSlide] = useState<number>(0);
 
   const [anchorElBgColor, setAnchorElBgColor] = React.useState<HTMLButtonElement | null>(null);
@@ -44,21 +48,33 @@ const Home: React.FC = () => {
     setSlides((prevSlides) => [...prevSlides, getDefaultSlide()]);
   };
 
-  const deleteSlide = (slideId: string) => {
-    setSlides((prevSlides) => prevSlides.filter((slide) => slide.id !== slideId));
+  const [deckState, dispatch] = useReducer(deckReducer, getInitialDeckConfig());
+
+  const onChangeDeckName = (e: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(updateDeckNameActionCreator({ name: e.currentTarget.value }));
   };
 
   return (
-    <DeckContext.Provider value={{ slides, setSlides }}>
+    <SlidesContext.Provider value={{ slides, setSlides }}>
       <CurrentSlideContext.Provider value={{ selectedSlide, setSelectedSlide }}>
         <div>
           <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static" elevation={3}>
               <Toolbar>
                 <Grid item xs={3}>
-                  <Typography variant="h6" component="div">
-                    Micro-Frontend Architecture
-                  </Typography>
+                  <InputBase
+                    sx={{
+                      width: '100%',
+                      fontWeight: 'bold',
+                      fontSize: '1.5rem',
+                      whiteSpace: 'nowrap',
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                    }}
+                    value={deckState.name}
+                    inputProps={{ 'aria-label': 'deck-title' }}
+                    onChange={onChangeDeckName}
+                  />
                 </Grid>
 
                 <Grid item xs={9} sx={{ display: 'flex' }}>
@@ -129,12 +145,7 @@ const Home: React.FC = () => {
                       </Button>
                     </Box>
 
-                    <Preview
-                      slides={slides}
-                      selectedSlide={selectedSlide}
-                      setSelectedSlide={setSelectedSlide}
-                      deleteSlide={deleteSlide}
-                    />
+                    <Preview selectedSlide={selectedSlide} setSelectedSlide={setSelectedSlide} />
 
                     <Paper
                       sx={{
@@ -174,7 +185,7 @@ const Home: React.FC = () => {
           </Box>
         </div>
       </CurrentSlideContext.Provider>
-    </DeckContext.Provider>
+    </SlidesContext.Provider>
   );
 };
 

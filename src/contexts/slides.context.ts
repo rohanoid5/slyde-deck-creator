@@ -1,14 +1,14 @@
 import { createContext, useContext } from 'react';
-import { DeckConfig } from '../types/deck';
+import { SlideConfig } from '../types/deck';
 
-export type DeckContextType = {
-  slides: Array<DeckConfig>;
-  setSlides: React.Dispatch<React.SetStateAction<Array<DeckConfig>>>;
+export type SlideContextType = {
+  slides: Array<SlideConfig>;
+  setSlides: React.Dispatch<React.SetStateAction<Array<SlideConfig>>>;
 };
 
-export const DeckContext = createContext<DeckContextType>({
+export const SlidesContext = createContext<SlideContextType>({
   slides: [],
   setSlides: () => {},
 });
 
-export const useDecks = () => useContext(DeckContext);
+export const useSlides = () => useContext(SlidesContext);

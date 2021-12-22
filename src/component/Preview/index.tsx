@@ -8,19 +8,23 @@ import StarOutlineIcon from '@mui/icons-material/StarOutline';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
-import { DeckConfig } from '../../types/deck';
+import { useSlides } from '../../contexts/slides.context';
 
 import PreviewStyle from './Preview.module.scss';
 
 const Preview: React.FC<{
-  slides: Array<DeckConfig>;
   selectedSlide: number;
   setSelectedSlide: React.Dispatch<React.SetStateAction<number>>;
-  deleteSlide: (id: string) => void;
-}> = ({ slides, selectedSlide, setSelectedSlide, deleteSlide }) => {
+}> = ({ selectedSlide, setSelectedSlide }) => {
   const [anchorPopEl, setAnchorPopEl] = useState<(EventTarget & HTMLButtonElement) | null>(null);
 
   const theme = useTheme();
+
+  const { slides, setSlides } = useSlides();
+
+  const deleteSlide = (slideId: string) => {
+    setSlides((prevSlides) => prevSlides.filter((slide) => slide.id !== slideId));
+  };
 
   const handleMoreClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     setAnchorPopEl(e.currentTarget);

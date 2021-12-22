@@ -27,27 +27,6 @@ export type Content = {
   value: string;
 };
 
-export interface DeckConfig {
-  id: string;
-  contents: Array<Content>;
-  createdAt: number;
-  updatedAt: number;
-}
-
-export interface Dimension {
-  width: number;
-  height: number;
-}
-
-export interface Position {
-  x: number;
-  y: number;
-}
-
-export interface ProcessedDeckConfig extends DeckConfig {
-  contents: Array<Content & Position>;
-}
-
 interface Color {
   percentage: number;
   color: string;
@@ -62,4 +41,35 @@ interface Gradient {
 export interface BGColor {
   mainColor: string;
   gradient: Gradient;
+}
+
+export interface SlideConfig {
+  id: string;
+  contents: Array<Content>;
+  createdAt: Date;
+  updatedAt: Date;
+  bgColor?: BGColor;
+}
+
+export interface DeckConfig {
+  id: string;
+  name: string;
+  slides: Array<SlideConfig>;
+  createdAt: Date;
+  updatedAt: Date;
+  defaultBgColor: BGColor;
+}
+
+export interface Dimension {
+  width: number;
+  height: number;
+}
+
+export interface Position {
+  x: number;
+  y: number;
+}
+
+export interface ProcessedSlideConfig extends SlideConfig {
+  contents: Array<Content & Position>;
 }
