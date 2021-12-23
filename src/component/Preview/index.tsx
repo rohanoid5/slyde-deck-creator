@@ -8,7 +8,10 @@ import StarOutlineIcon from '@mui/icons-material/StarOutline';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
-import { useSlides } from '../../contexts/slides.context';
+import { useDecks } from '../../contexts/deck.context';
+import { deleteSlideActionCreator } from '../../actions';
+
+import { getBgColorCSS } from '../../utils/slides';
 
 import PreviewStyle from './Preview.module.scss';
 
@@ -20,10 +23,13 @@ const Preview: React.FC<{
 
   const theme = useTheme();
 
-  const { slides, setSlides } = useSlides();
+  const {
+    deckConfig: { slides, defaultBgColor },
+    dispatch,
+  } = useDecks();
 
   const deleteSlide = (slideId: string) => {
-    setSlides((prevSlides) => prevSlides.filter((slide) => slide.id !== slideId));
+    dispatch(deleteSlideActionCreator({ id: slideId }));
   };
 
   const handleMoreClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -49,10 +55,9 @@ const Preview: React.FC<{
                 marginBottom: '.5rem',
                 minHeight: '256px',
                 position: 'relative',
-                border:
-                  idx === selectedSlide
-                    ? `2px solid ${theme.palette.primary.main}`
-                    : '2px solid transparent',
+                border: idx === selectedSlide ? `2px solid ${theme.palette.primary.main}` : '',
+                background: defaultBgColor.mainColor,
+                backgroundImage: getBgColorCSS(defaultBgColor),
               }}
               elevation={6}
             >

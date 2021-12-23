@@ -1,8 +1,14 @@
 import React from 'react';
 
 import { Paper } from '@mui/material';
+import { useDecks } from '../../contexts/deck.context';
+import { getBgColorCSS } from '../../utils/slides';
 
 const Slide: React.FC = () => {
+  const {
+    deckConfig: { defaultBgColor },
+  } = useDecks();
+
   return (
     <Paper
       elevation={6}
@@ -10,9 +16,8 @@ const Slide: React.FC = () => {
         margin: '2rem',
         padding: '2rem',
         height: 'calc(100% - 4rem)',
-        background: 'rgb(65, 88, 208)',
-        backgroundImage:
-          'linear-gradient(43deg, rgb(65, 88, 208) 0%, rgb(200, 80, 192) 46%, rgb(255, 204, 112) 100%)',
+        background: defaultBgColor.mainColor,
+        backgroundImage: getBgColorCSS(defaultBgColor),
       }}
     >
       This is where the deck goes

@@ -1,0 +1,9 @@
+.color-wrapper {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.color-wrapper:hover {
+  opacity: 0.6;
+}

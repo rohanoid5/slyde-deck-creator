@@ -1,4 +1,4 @@
-import React, { useReducer, useState } from 'react';
+import React, { useEffect, useReducer, useState } from 'react';
 
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
@@ -14,22 +14,17 @@ import AddIcon from '@mui/icons-material/Add';
 import ColorLensIcon from '@mui/icons-material/ColorLens';
 import InputBase from '@mui/material/InputBase';
 
-import { SlideConfig } from '../../types/deck';
-
-import { SlidesContext } from '../../contexts/slides.context';
 import { CurrentSlideContext } from '../../contexts/currentSlide.context';
-
-import { getDefaultSlide } from '../../utils/slides';
+import { DeckContext } from '../../contexts/deck.context';
 
 import Preview from '../Preview';
 import Slide from '../Slide';
 import BgColor from '../BgColor';
 
-import { updateDeckNameActionCreator } from '../../actions';
+import { addSlideActionCreator, updateDeckNameActionCreator } from '../../actions';
 import { deckReducer, getInitialDeckConfig } from '../../reducers/deck.reducer';
 
 const Home: React.FC = () => {
-  const [slides, setSlides] = useState<Array<SlideConfig>>([]);
   const [selectedSlide, setSelectedSlide] = useState<number>(0);
 
   const [anchorElBgColor, setAnchorElBgColor] = React.useState<HTMLButtonElement | null>(null);
@@ -45,17 +40,21 @@ const Home: React.FC = () => {
   const openBgColor = Boolean(anchorElBgColor);
 
   const addSlides = () => {
-    setSlides((prevSlides) => [...prevSlides, getDefaultSlide()]);
+    dispatch(addSlideActionCreator(null));
   };
 
-  const [deckState, dispatch] = useReducer(deckReducer, getInitialDeckConfig());
+  const [deckConfig, dispatch] = useReducer(deckReducer, getInitialDeckConfig());
 
   const onChangeDeckName = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(updateDeckNameActionCreator({ name: e.currentTarget.value }));
   };
 
+  useEffect(() => {
+    setSelectedSlide(0);
+  }, [deckConfig.slides]);
+
   return (
-    <SlidesContext.Provider value={{ slides, setSlides }}>
+    <DeckContext.Provider value={{ deckConfig, dispatch }}>
       <CurrentSlideContext.Provider value={{ selectedSlide, setSelectedSlide }}>
         <div>
           <Box sx={{ flexGrow: 1 }}>
@@ -71,7 +70,7 @@ const Home: React.FC = () => {
                       overflow: 'hidden',
                       textOverflow: 'ellipsis',
                     }}
-                    value={deckState.name}
+                    value={deckConfig.name}
                     inputProps={{ 'aria-label': 'deck-title' }}
                     onChange={onChangeDeckName}
                   />
@@ -133,7 +132,9 @@ const Home: React.FC = () => {
                       <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
                         Your Slides
                       </Typography>
-                      <Typography variant="subtitle2">&nbsp;(Total: {slides.length})</Typography>
+                      <Typography variant="subtitle2">
+                        &nbsp;(Total: {deckConfig.slides.length})
+                      </Typography>
                       <Button
                         sx={{ marginLeft: 'auto' }}
                         color="primary"
@@ -173,7 +174,7 @@ const Home: React.FC = () => {
                 </Paper>
               </Grid>
               <Grid item xs={9}>
-                {slides.length === 0 ? (
+                {deckConfig.slides.length === 0 ? (
                   <Typography variant="h4" component="div" align="center" sx={{ margin: '12rem' }}>
                     So empty....
                   </Typography>
@@ -185,7 +186,7 @@ const Home: React.FC = () => {
           </Box>
         </div>
       </CurrentSlideContext.Provider>
-    </SlidesContext.Provider>
+    </DeckContext.Provider>
   );
 };
 

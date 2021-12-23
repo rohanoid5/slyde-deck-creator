@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import {
   addSlideActionCreator,
+  deleteSlideActionCreator,
   isActionType,
   updateDeckBackgroundActionCreator,
   updateDeckNameActionCreator,
@@ -39,5 +40,9 @@ export const deckReducer = (state: DeckConfig, action: Action<any>): DeckConfig 
     return { ...state, slides: [...state.slides, getInitialSlideConfig()] };
   }
 
-  return state;
+  if (isActionType(action, deleteSlideActionCreator)) {
+    return { ...state, slides: state.slides.filter((slide) => slide.id !== action.payload.id) };
+  }
+
+  return { ...state };
 };
