@@ -9,20 +9,18 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 import { useDecks } from '../../contexts/deck.context';
+import { useCurrentDeck } from '../../contexts/currentSlide.context';
 import { deleteSlideActionCreator } from '../../actions';
 
 import { getBgColorCSS } from '../../utils/slides';
 
 import PreviewStyle from './Preview.module.scss';
 
-const Preview: React.FC<{
-  selectedSlide: number;
-  setSelectedSlide: React.Dispatch<React.SetStateAction<number>>;
-}> = ({ selectedSlide, setSelectedSlide }) => {
+const Preview: React.FC = () => {
   const [anchorPopEl, setAnchorPopEl] = useState<(EventTarget & HTMLButtonElement) | null>(null);
 
   const theme = useTheme();
-
+  const { selectedSlide, setSelectedSlide } = useCurrentDeck();
   const {
     deckConfig: { slides, defaultBgColor },
     dispatch,
