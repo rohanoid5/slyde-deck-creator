@@ -1,0 +1,14 @@
+.container {
+  position: relative;
+  height: calc(100% - 4rem);
+  margin: 2rem;
+
+  .draggable {
+    position: absolute;
+    cursor: grab;
+  }
+
+  .dragging {
+    cursor: grabbing;
+  }
+}

@@ -1,26 +1,20 @@
-enum VARIANT {
-  h1 = 'h1',
-  h2 = 'h2',
-  h3 = 'h3',
-  h4 = 'h4',
-  p = 'p',
-}
+export type Variant =
+  | 'h1'
+  | 'h2'
+  | 'h3'
+  | 'h4'
+  | 'h5'
+  | 'h6'
+  | 'inherit'
+  | 'subtitle1'
+  | 'subtitle2'
+  | 'body1'
+  | 'body2'
+  | 'overline';
 
 export type Content = {
-  variant:
-    | 'h1'
-    | 'h2'
-    | 'h3'
-    | 'h4'
-    | 'h5'
-    | 'h6'
-    | 'subtitle1'
-    | 'subtitle2'
-    | 'body1'
-    | 'body2'
-    | 'caption'
-    | 'button'
-    | 'overline';
+  id: string;
+  variant: Variant;
   positionX: number;
   positionY: number;
   fontWeight: string;

@@ -1,7 +1,7 @@
 import { createContext, useContext } from 'react';
-import { getInitialDeckConfig } from '../reducers/deck.reducer';
 import { Action } from '../types/actions';
 import { DeckConfig } from '../types/deck';
+import { getInitialDeckConfig } from '../utils/slides';
 
 export type DeckContextType = {
   deckConfig: DeckConfig;

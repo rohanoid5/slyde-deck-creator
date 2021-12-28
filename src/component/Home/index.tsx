@@ -6,21 +6,18 @@ import Typography from '@mui/material/Typography';
 
 import { CurrentSlideContext } from '../../contexts/currentSlide.context';
 import { DeckContext } from '../../contexts/deck.context';
+import { getInitialDeckConfig } from '../../utils/slides';
 
 import Slide from '../Slide';
 import Toolbar from '../Toolbar';
 import Sidebar from '../Sidebar';
 
-import { deckReducer, getInitialDeckConfig } from '../../reducers/deck.reducer';
+import { deckReducer } from '../../reducers/deck.reducer';
 
 const Home: React.FC = () => {
   const [selectedSlide, setSelectedSlide] = useState<number>(0);
 
   const [deckConfig, dispatch] = useReducer(deckReducer, getInitialDeckConfig());
-
-  useEffect(() => {
-    setSelectedSlide(0);
-  }, [deckConfig.slides]);
 
   return (
     <DeckContext.Provider value={{ deckConfig, dispatch }}>
