@@ -27,7 +27,7 @@ const Preview: React.FC = () => {
   } = useDecks();
 
   const deleteSlide = (slideId: string) => {
-    dispatch(deleteSlideActionCreator({ id: slideId }));
+    dispatch(deleteSlideActionCreator({ idx: selectedSlide }));
   };
 
   const handleMoreClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {

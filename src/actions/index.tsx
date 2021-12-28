@@ -5,6 +5,7 @@ import {
   UPDATE_CONTENT_POSITION,
   UPDATE_DECK_BG_COLOR,
   UPDATE_DECK_NAME,
+  UPDATE_CONTENT_VALUE,
 } from '../constants/actions';
 import { Action, IActionCreator } from '../types/actions';
 import { BGColor, Variant } from '../types/deck';
@@ -25,7 +26,7 @@ export const updateDeckBackgroundActionCreator =
   actionCreator<{ bgColor: BGColor }>(UPDATE_DECK_BG_COLOR);
 
 export const addSlideActionCreator = actionCreator<null>(CREATE_SLIDE);
-export const deleteSlideActionCreator = actionCreator<{ id: string }>(REMOVE_SLIDE);
+export const deleteSlideActionCreator = actionCreator<{ idx: number }>(REMOVE_SLIDE);
 
 export const addContentActionCreator =
   actionCreator<{ selectedSlide: number; variant: Variant; placeholder: string }>(CREATE_CONTENT);
@@ -35,3 +36,8 @@ export const updateContentPositionActionCreator = actionCreator<{
   positionX: number;
   positionY: number;
 }>(UPDATE_CONTENT_POSITION);
+export const updateContentValueActionCreator = actionCreator<{
+  selectedSlide: number;
+  id: string;
+  value: string;
+}>(UPDATE_CONTENT_VALUE);

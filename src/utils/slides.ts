@@ -49,3 +49,10 @@ export const updateContentPosition = (
     positionY,
   };
 };
+
+export const updateContentValue = (content: Content, value: string): Content => {
+  return {
+    ...content,
+    value,
+  };
+};

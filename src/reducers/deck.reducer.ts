@@ -1,17 +1,22 @@
-import { v4 as uuidv4 } from 'uuid';
 import {
   addContentActionCreator,
   addSlideActionCreator,
   deleteSlideActionCreator,
   isActionType,
   updateContentPositionActionCreator,
+  updateContentValueActionCreator,
   updateDeckBackgroundActionCreator,
   updateDeckNameActionCreator,
 } from '../actions';
 
 import { Action } from '../types/actions';
 import { DeckConfig } from '../types/deck';
-import { getDefaultContent, getInitialSlideConfig, updateContentPosition } from '../utils/slides';
+import {
+  getDefaultContent,
+  getInitialSlideConfig,
+  updateContentPosition,
+  updateContentValue,
+} from '../utils/slides';
 
 export const deckReducer = (state: DeckConfig, action: Action<any>): DeckConfig => {
   if (isActionType(action, updateDeckNameActionCreator)) {
@@ -27,7 +32,15 @@ export const deckReducer = (state: DeckConfig, action: Action<any>): DeckConfig 
   }
 
   if (isActionType(action, deleteSlideActionCreator)) {
-    return { ...state, slides: state.slides.filter((slide) => slide.id !== action.payload.id) };
+    const finalState = {
+      ...state,
+      slides: state.slides.filter((_, idx) => idx !== action.payload.idx),
+    };
+
+    console.log(state);
+    console.log(finalState);
+
+    return finalState;
   }
 
   if (isActionType(action, addContentActionCreator)) {
@@ -62,6 +75,25 @@ export const deckReducer = (state: DeckConfig, action: Action<any>): DeckConfig 
                 return id !== content.id
                   ? content
                   : updateContentPosition(content, positionX, positionY);
+              }),
+            };
+      }),
+    };
+  }
+
+  if (isActionType(action, updateContentValueActionCreator)) {
+    const { selectedSlide, id, value } = action.payload;
+
+    return {
+      ...state,
+      slides: state.slides.map((slide, idx) => {
+        return selectedSlide !== idx
+          ? slide
+          : {
+              ...slide,
+              updatedAt: new Date(),
+              contents: slide.contents.map((content) => {
+                return id !== content.id ? content : updateContentValue(content, value);
               }),
             };
       }),

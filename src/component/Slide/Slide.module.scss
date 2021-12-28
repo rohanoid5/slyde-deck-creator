@@ -11,4 +11,34 @@
   .dragging {
     cursor: grabbing;
   }
+
+  .typography-h1 {
+    font-size: 6rem;
+    line-height: 1.167;
+  }
+
+  .typography-h2 {
+    font-size: 3.75rem;
+    line-height: 1.2;
+  }
+
+  .typography-h3 {
+    font-size: 3rem;
+    line-height: 1.167;
+  }
+
+  .typography-h4 {
+    font-size: 2.125rem;
+    line-height: 1.235;
+  }
+
+  .typography-h5 {
+    font-size: 1.5rem;
+    line-height: 1.334;
+  }
+
+  .typography-h6 {
+    font-size: 1.25rem;
+    line-height: 1.6;
+  }
 }

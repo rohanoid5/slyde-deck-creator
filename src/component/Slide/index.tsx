@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Draggable, { DraggableData, DraggableEvent } from 'react-draggable';
-import { Paper, Typography } from '@mui/material';
+import { InputBase, Paper, Typography } from '@mui/material';
 
 import { useCurrentDeck } from '../../contexts/currentSlide.context';
 import { useDecks } from '../../contexts/deck.context';
@@ -9,7 +9,7 @@ import { useDecks } from '../../contexts/deck.context';
 import { getBgColorCSS } from '../../utils/slides';
 
 import SlideStyles from './Slide.module.scss';
-import { updateContentPositionActionCreator } from '../../actions';
+import { updateContentPositionActionCreator, updateContentValueActionCreator } from '../../actions';
 
 const Slide: React.FC = () => {
   const {
@@ -30,6 +30,14 @@ const Slide: React.FC = () => {
       );
     };
 
+    const onChangeContentValue = (
+      e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+      id: string,
+    ) => {
+      dispatch(
+        updateContentValueActionCreator({ id, selectedSlide, value: e.currentTarget.value }),
+      );
+    };
     return (
       <Paper
         elevation={6}
@@ -49,9 +57,16 @@ const Slide: React.FC = () => {
             defaultPosition={{ x: positionX, y: positionY }}
             bounds="parent"
           >
-            <Typography variant={variant} component="div">
+            {/* <Typography variant={variant} component="div">
               {value}
-            </Typography>
+            </Typography> */}
+            <InputBase
+              className={SlideStyles[`typography-${variant}`]}
+              sx={{ width: `${value.length}ch` }}
+              value={value}
+              inputProps={{ 'aria-label': 'deck-title' }}
+              onChange={(arg) => onChangeContentValue(arg, id)}
+            />
           </Draggable>
         ))}
       </Paper>
