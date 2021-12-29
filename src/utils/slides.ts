@@ -31,8 +31,10 @@ export const getDefaultContent = (variant: Variant, placeholder: string): Conten
   return {
     id: uuidv4(),
     variant,
-    positionX: 0,
-    positionY: 0,
+    x: 0,
+    y: 0,
+    xPercentage: 0,
+    yPercentage: 0,
     fontWeight: '500',
     value: placeholder,
   };
@@ -40,13 +42,17 @@ export const getDefaultContent = (variant: Variant, placeholder: string): Conten
 
 export const updateContentPosition = (
   content: Content,
-  positionX: number,
-  positionY: number,
+  x: number,
+  y: number,
+  xPercentage: number,
+  yPercentage: number,
 ): Content => {
   return {
     ...content,
-    positionX,
-    positionY,
+    x,
+    y,
+    xPercentage,
+    yPercentage,
   };
 };
 

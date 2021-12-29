@@ -15,8 +15,10 @@ export type Variant =
 export type Content = {
   id: string;
   variant: Variant;
-  positionX: number;
-  positionY: number;
+  x: number;
+  y: number;
+  xPercentage: number;
+  yPercentage: number;
   fontWeight: string;
   value: string;
 };

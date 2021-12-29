@@ -32,15 +32,10 @@ export const deckReducer = (state: DeckConfig, action: Action<any>): DeckConfig 
   }
 
   if (isActionType(action, deleteSlideActionCreator)) {
-    const finalState = {
+    return {
       ...state,
       slides: state.slides.filter((_, idx) => idx !== action.payload.idx),
     };
-
-    console.log(state);
-    console.log(finalState);
-
-    return finalState;
   }
 
   if (isActionType(action, addContentActionCreator)) {
@@ -61,7 +56,7 @@ export const deckReducer = (state: DeckConfig, action: Action<any>): DeckConfig 
   }
 
   if (isActionType(action, updateContentPositionActionCreator)) {
-    const { selectedSlide, id, positionX, positionY } = action.payload;
+    const { selectedSlide, id, x, y, xPercentage, yPercentage } = action.payload;
 
     return {
       ...state,
@@ -74,7 +69,7 @@ export const deckReducer = (state: DeckConfig, action: Action<any>): DeckConfig 
               contents: slide.contents.map((content) => {
                 return id !== content.id
                   ? content
-                  : updateContentPosition(content, positionX, positionY);
+                  : updateContentPosition(content, x, y, xPercentage, yPercentage);
               }),
             };
       }),

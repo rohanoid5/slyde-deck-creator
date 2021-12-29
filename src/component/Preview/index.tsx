@@ -26,7 +26,7 @@ const Preview: React.FC = () => {
     dispatch,
   } = useDecks();
 
-  const deleteSlide = (slideId: string) => {
+  const deleteSlide = () => {
     dispatch(deleteSlideActionCreator({ idx: selectedSlide }));
   };
 
@@ -47,7 +47,11 @@ const Preview: React.FC = () => {
     <>
       {slides.map((slide, idx) => {
         return (
-          <div key={slide.id} onClick={() => handleSlideClick(idx)}>
+          <div
+            key={slide.id}
+            onClick={() => handleSlideClick(idx)}
+            className={PreviewStyle['container']}
+          >
             <Paper
               sx={{
                 marginBottom: '.5rem',
@@ -59,6 +63,23 @@ const Preview: React.FC = () => {
               }}
               elevation={6}
             >
+              {slide.contents.map(({ id, variant, xPercentage, yPercentage, value }) => (
+                <Typography
+                  key={id}
+                  variant={variant}
+                  component="div"
+                  sx={{
+                    position: 'absolute',
+                    left: `${xPercentage}%`,
+                    top: `${yPercentage}%`,
+                    width: 'max-content',
+                  }}
+                  className={PreviewStyle[`typography-${variant}`]}
+                >
+                  {value}
+                </Typography>
+              ))}
+
               <IconButton
                 aria-describedby={popId}
                 size="medium"
@@ -92,19 +113,31 @@ const Preview: React.FC = () => {
                     size="small"
                     startIcon={<DeleteIcon />}
                     onClick={() => {
-                      deleteSlide(slide.id);
+                      deleteSlide();
                       handleMoreClose();
                     }}
                   >
                     Delete
                   </Button>
-                  <Button size="small" startIcon={<StarOutlineIcon />}>
+                  <Button
+                    size="small"
+                    startIcon={<StarOutlineIcon />}
+                    className={PreviewStyle['action-btn']}
+                  >
                     Star
                   </Button>
-                  <Button size="small" startIcon={<KeyboardArrowUpIcon />}>
+                  <Button
+                    size="small"
+                    startIcon={<KeyboardArrowUpIcon />}
+                    className={PreviewStyle['action-btn']}
+                  >
                     Shift Up
                   </Button>
-                  <Button size="small" startIcon={<KeyboardArrowDownIcon />}>
+                  <Button
+                    size="small"
+                    startIcon={<KeyboardArrowDownIcon />}
+                    className={PreviewStyle['action-btn']}
+                  >
                     Shift Down
                   </Button>
                 </Box>

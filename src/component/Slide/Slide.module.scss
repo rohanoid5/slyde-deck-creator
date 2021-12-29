@@ -2,6 +2,7 @@
   position: relative;
   height: calc(100% - 4rem);
   margin: 2rem;
+  font-size: 16px;
 
   .draggable {
     position: absolute;
@@ -12,33 +13,67 @@
     cursor: grabbing;
   }
 
+  .input {
+    position: absolute;
+  }
+
   .typography-h1 {
-    font-size: 6rem;
+    font-size: 6em;
     line-height: 1.167;
+    font-weight: 300;
   }
 
   .typography-h2 {
-    font-size: 3.75rem;
+    font-size: 3.75em;
     line-height: 1.2;
+    font-weight: 300;
   }
 
   .typography-h3 {
-    font-size: 3rem;
+    font-size: 3em;
     line-height: 1.167;
+    font-weight: 400;
   }
 
   .typography-h4 {
-    font-size: 2.125rem;
+    font-size: 2.125em;
     line-height: 1.235;
+    font-weight: 400;
   }
 
   .typography-h5 {
-    font-size: 1.5rem;
+    font-size: 1.5em;
     line-height: 1.334;
+    font-weight: 400;
   }
 
   .typography-h6 {
-    font-size: 1.25rem;
+    font-size: 1.25em;
     line-height: 1.6;
+    font-weight: 500;
+  }
+
+  .typography-subtitle1 {
+    font-weight: 400;
+    font-size: 1em;
+    line-height: 1.75;
+  }
+
+  .typography-subtitle2 {
+    font-weight: 500;
+    font-size: 0.875em;
+    line-height: 1.57;
+  }
+
+  .typography-body1 {
+    font-weight: 400;
+    font-size: 1em;
+    line-height: 1.5;
+  }
+
+  .typography-body2 {
+    font-weight: 400;
+    font-size: 0.875em;
+    line-height: 1.43;
   }
 }

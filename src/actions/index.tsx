@@ -33,8 +33,10 @@ export const addContentActionCreator =
 export const updateContentPositionActionCreator = actionCreator<{
   selectedSlide: number;
   id: string;
-  positionX: number;
-  positionY: number;
+  x: number;
+  y: number;
+  xPercentage: number;
+  yPercentage: number;
 }>(UPDATE_CONTENT_POSITION);
 export const updateContentValueActionCreator = actionCreator<{
   selectedSlide: number;
